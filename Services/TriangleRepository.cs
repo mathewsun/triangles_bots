@@ -18,7 +18,7 @@ namespace WebApiOnline.ApiBots.Services
             _db = new SqlConnection("server=localhost\\SQLEXPRESS;user=exchange;password=exchange1;database=Exchange");
         }
 
-        private async Task AddTriangleData(DateTime date, string pairs, decimal pair1price, decimal pair2price, decimal pair3price)
+        public async Task AddTriangleData(DateTime date, string pairs, decimal pair1price, decimal pair2price, decimal pair3price)
         {
             var parameters = new DynamicParameters();
             parameters.Add("pairs", pairs);
