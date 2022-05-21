@@ -33,39 +33,43 @@ namespace WebApiOnline.ApiBots.Services
 
             DateTime currentTime = DateTime.Now;
 
+            //DateTime pair1Time = DateTime.Now;
+            //DateTime pair2Time = DateTime.Now;
+            //DateTime pair3Time = DateTime.Now;
+
             _ = socketClient.Spot.SubscribeToTradeUpdatesAsync("BTCUSDT", async data =>
             {
+                pair1price = data.Data.Price;
+
                 if (data.Data.TradeTime.Second != currentTime.Second)
                 {
                     repo.AddTriangleData(currentTime, "btc-eth-usdt", pair1price, pair2price, pair3price);
 
                     currentTime = DateTime.Parse(data.Data.TradeTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"), System.Globalization.CultureInfo.CurrentCulture);
-                    
-                    pair1price = data.Data.Price;
                 }
             });
 
             _ = socketClient.Spot.SubscribeToTradeUpdatesAsync("ETHUSDT", async data =>
             {
+                pair2price = data.Data.Price;
+
                 if (data.Data.TradeTime.Second != currentTime.Second)
                 {
                     repo.AddTriangleData(currentTime, "btc-eth-usdt", pair1price, pair2price, pair3price);
 
                     currentTime = DateTime.Parse(data.Data.TradeTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"), System.Globalization.CultureInfo.CurrentCulture);
-
-                    pair2price = data.Data.Price;
                 }
             });
 
             _ = socketClient.Spot.SubscribeToTradeUpdatesAsync("ETHBTC", async data =>
             {
+                pair3price = data.Data.Price;
+
                 if (data.Data.TradeTime.Second != currentTime.Second)
                 {
                     repo.AddTriangleData(currentTime, "btc-eth-usdt", pair1price, pair2price, pair3price);
 
                     currentTime = DateTime.Parse(data.Data.TradeTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"), System.Globalization.CultureInfo.CurrentCulture);
-
-                    pair3price = data.Data.Price;
                 }
             });
 

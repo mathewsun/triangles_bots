@@ -36,8 +36,8 @@ create PROCEDURE [dbo].[AddTriangleData]
 AS
 BEGIN
 
-INSERT INTO [Exchange].[dbo].[TrianglesData] ([Date], Pairs, [1PairPrice], [2PairPrice], [3PairPrice])
-VALUES (@date, @pairs, @pair1price, @pair2price, @pair3price)
+INSERT INTO [Exchange].[dbo].[TrianglesData] ([Date], Pairs, [1PairPrice], [2PairPrice], [3PairPrice], [Profit], [ProfitPercent])
+VALUES (@date, @pairs, @pair1price, @pair2price, @pair3price, (((1 / @pair3price) * @pair2price/ @pair1price) - 1), ((((1 / @pair3price) * @pair2price/ @pair1price) - 1) * 100))
 
 END
 GO
